@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import faker from 'faker';
 
 import searchIcon from './assets/search.svg';
+import ClipItem from './ClipItem';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.search = React.createRef();
-    
+
     const clipData = [];
     for (let index = 0; index < 10; index++) {
       clipData.push(faker.lorem.sentence());
@@ -39,8 +40,7 @@ class App extends Component {
     const { clipData } = this.state;
 
     let searchResult = clipData.filter(clipItem => {
-      return clipItem.toLowerCase()
-        .includes(searchQuery.toLowerCase());
+      return clipItem.toLowerCase().includes(searchQuery.toLowerCase());
     });
 
     this.setState({ searchResult });
@@ -69,12 +69,14 @@ class App extends Component {
         </div>
 
         <div className="clipboard-items">
-          {searchResult.map((item, index) => (
-            <div key={index} className="clipboard-item">
-              <p>{item}</p>
-              <span>{index + 1}</span>
-            </div>
-          ))}
+          {searchResult.length ? (
+            searchResult.map((item, index) => {
+              const props = { item, position: index + 1 };
+              return <ClipItem key={index} {...props} />;
+            })
+          ) : (
+            <p className="no-result">No result found</p>
+          )}
         </div>
       </div>
     );

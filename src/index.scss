@@ -38,24 +38,24 @@ body {
   font-weight: 400;
   line-height: 1.6em;
   font-size: 1.4rem;
-  color: #62676A;
+  color: #62676a;
 }
 
 #{$clip} {
   max-width: 50rem;
   min-height: 20rem;
   margin: 3rem auto;
-  border-radius: .4rem;
+  border-radius: 0.4rem;
   box-shadow: 0.2rem 0.4rem 0.6rem #ccc;
 
   .search-wrapper {
-      position: relative;
+    position: relative;
   }
 
   .search-icon {
-      position: absolute;
-      top: 1.8rem;
-      left: 1.6rem;
+    position: absolute;
+    top: 1.8rem;
+    left: 1.6rem;
   }
 
   .search-box {
@@ -69,13 +69,20 @@ body {
     outline: none;
 
     &:focus {
-        background-color: #fff;
+      background-color: #fff;
     }
   }
 
   #{$clip}-items {
-      height: 32.6rem;
-      overflow: scroll;
+    height: 32.6rem;
+    overflow: scroll;
+
+    .no-result {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   #{$clip}-item {
@@ -95,8 +102,8 @@ body {
     }
 
     span {
-        flex: 1;
-        text-align: right;
+      flex: 1;
+      text-align: right;
     }
   }
 }
