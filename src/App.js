@@ -7,6 +7,16 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.search = React.createRef();
+    
+    const clipData = [];
+    for (let index = 0; index < 10; index++) {
+      clipData.push(faker.lorem.sentence());
+    }
+
+    this.state = {
+      clipData,
+      searchResult: [...clipData]
+    };
   }
 
   componentDidMount() {
@@ -16,7 +26,7 @@ class App extends Component {
   componentWillUnmount() {
     window.removeEventListener('keyup', this.handleKeyUp);
   }
-  
+
   handleKeyUp = e => {
     const { keyCode } = e;
     if (keyCode === 191) {
@@ -24,25 +34,44 @@ class App extends Component {
     }
   };
 
+  searchClipboard = e => {
+    const searchQuery = e.target.value;
+    const { clipData } = this.state;
+
+    let searchResult = clipData.filter(clipItem => {
+      return clipItem.toLowerCase()
+        .includes(searchQuery.toLowerCase());
+    });
+
+    this.setState({ searchResult });
+  };
+
   render() {
     const placeholderText = 'Search clipboard (Press "/" to focus)';
+    const { searchResult } = this.state;
 
     return (
       <div className="clipboard">
         <div className="search-wrapper">
-          <img className="search-icon" src={searchIcon} alt="search icon" width="16" />
+          <img
+            className="search-icon"
+            src={searchIcon}
+            alt="search icon"
+            width="16"
+          />
           <input
             ref={this.search}
             className="search-box"
             type="text"
+            onChange={this.searchClipboard}
             placeholder={placeholderText}
           />
         </div>
 
         <div className="clipboard-items">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => (
-            <div key={item} className="clipboard-item">
-              <p>{faker.lorem.sentence()}</p>
+          {searchResult.map((item, index) => (
+            <div key={index} className="clipboard-item">
+              <p>{item}</p>
               <span>{index + 1}</span>
             </div>
           ))}
