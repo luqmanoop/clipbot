@@ -1,0 +1,102 @@
+$clip: '.clipboard';
+$light-gray: #f0f0f0;
+
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style: none;
+  *,
+  &::before,
+  &::after {
+    box-sizing: inherit;
+  }
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #333;
+  letter-spacing: 0.06rem;
+}
+
+body {
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  line-height: 1.6em;
+  font-size: 1.4rem;
+  color: #62676A;
+}
+
+#{$clip} {
+  max-width: 50rem;
+  min-height: 20rem;
+  margin: 3rem auto;
+  border-radius: .4rem;
+  box-shadow: 0.2rem 0.4rem 0.6rem #ccc;
+
+  .search-wrapper {
+      position: relative;
+  }
+
+  .search-icon {
+      position: absolute;
+      top: 1.8rem;
+      left: 1.6rem;
+  }
+
+  .search-box {
+    width: 100%;
+    padding: 1.6rem;
+    padding-left: 4rem;
+    font-size: 1.4rem;
+    background-color: lighten($light-gray, 2%);
+    border: none;
+    border: 1px solid $light-gray;
+    outline: none;
+
+    &:focus {
+        background-color: #fff;
+    }
+  }
+
+  #{$clip}-items {
+      height: 32.6rem;
+      overflow: scroll;
+  }
+
+  #{$clip}-item {
+    padding: 1.6rem;
+    display: flex;
+    color: darken($light-gray, 75%);
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $light-gray;
+    }
+
+    p {
+      flex: 0 0 90%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    span {
+        flex: 1;
+        text-align: right;
+    }
+  }
+}
