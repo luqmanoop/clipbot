@@ -1,4 +1,5 @@
 $clip: '.clipboard';
+$scrollbar: '::-webkit-scrollbar';
 $light-gray: #f0f0f0;
 
 * {
@@ -41,15 +42,17 @@ body {
   color: #62676a;
 }
 
+#{$scrollbar} {
+  width: 0;
+}
+
 #{$clip} {
-  max-width: 50rem;
-  min-height: 20rem;
-  margin: 3rem auto;
+  width: 100%;
   border-radius: 0.4rem;
-  box-shadow: 0.2rem 0.4rem 0.6rem #ccc;
 
   .search-wrapper {
-    position: relative;
+    position: fixed;
+    width: 100%;
   }
 
   .search-icon {
@@ -74,12 +77,11 @@ body {
   }
 
   #{$clip}-items {
-    height: 32.6rem;
-    overflow: scroll;
+      padding-top: 5.1rem;
 
     .no-result {
       display: flex;
-      height: 100%;
+      height: 70vh;
       align-items: center;
       justify-content: center;
     }
@@ -89,6 +91,7 @@ body {
     padding: 1.6rem;
     display: flex;
     color: darken($light-gray, 75%);
+    cursor: default;
 
     &:not(:last-child) {
       border-bottom: 1px solid $light-gray;
