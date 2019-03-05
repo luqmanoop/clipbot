@@ -4,12 +4,14 @@ import faker from 'faker';
 import ClipItem from './ClipItem';
 import Search from './Search';
 
+const { ipcRenderer } = window.require('electron');
+
 class App extends Component {
   constructor(props) {
     super(props);
-    
+
     const clipData = [];
-    for (let index = 0; index < 10; index++) {
+    for (let index = 0; index < 1; index++) {
       clipData.push(faker.lorem.sentence());
     }
 
@@ -18,6 +20,21 @@ class App extends Component {
       searchResult: [...clipData]
     };
   }
+
+  componentDidMount() {
+    ipcRenderer.on('clip:add', this.addToClipboard);
+  }
+
+  addToClipboard = (e, clip) => {
+    const { clipData: clippings } = this.state;
+    if (clippings[0] === clip) return;
+
+    clippings.unshift(clip);
+    this.setState({
+      clipData: clippings,
+      searchResult: clippings
+    });
+  };
 
   searchClipboard = e => {
     const searchQuery = e.target.value;

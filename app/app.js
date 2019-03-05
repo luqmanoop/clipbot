@@ -1,21 +1,24 @@
-import { app, BrowserWindow, globalShortcut } from 'electron';
+import { app } from 'electron';
+import MainWindow from './mainWindow';
+import ClipBot from './clipbot';
 
 let win;
-app.on('ready', () => {
-  globalShortcut.register('CmdOrCtrl+Shift+C', () => {
-    win.show();
-  });
+let bot;
 
-  win = new BrowserWindow({
-    width: 450,
-    height: 400,
-    frame: false,
-    resizable: false,
-    show: false
-  });
-
-  win.loadURL('http://localhost:3000');
-  win.on('closed', () => {
+const cleanup = app => {
+  app.on('quit', () => {
     win = null;
+    bot = null;
   });
+};
+
+app.on('ready', () => {
+  win = new MainWindow('http://localhost:3000');
+
+  bot = new ClipBot(app);
+  bot.watchClipboard(clip => {
+    win.webContents.send('clip:add', clip);
+  });
+
+  cleanup(app);
 });
