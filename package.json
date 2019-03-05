@@ -2,6 +2,7 @@
   "name": "clip-bot",
   "version": "0.1.0",
   "private": true,
+  "main": "dist/app.js",
   "dependencies": {
     "electron": "4.0.6",
     "faker": "4.1.0",
@@ -10,8 +11,11 @@
     "react-scripts": "2.1.5"
   },
   "scripts": {
-    "electron": "electron ./app.js",
-    "start": "react-scripts start",
+    "app": "electron .",
+    "app:build": "babel app -d dist",
+    "start:dev": "npm run app:build && npm run app",
+    "start": "nodemon --watch src --watch app --exec 'npm run start:dev'",
+    "react": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -26,6 +30,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "node-sass": "4.11.0"
+    "@babel/cli": "7.2.3",
+    "@babel/core": "7.3.4",
+    "@babel/preset-env": "7.3.4",
+    "node-sass": "4.11.0",
+    "nodemon": "1.18.10"
   }
 }

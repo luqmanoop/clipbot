@@ -1,9 +1,6 @@
-const electron = require('electron');
-
-const { app, BrowserWindow, globalShortcut } = electron;
+import { app, BrowserWindow, globalShortcut } from 'electron';
 
 let win;
-
 app.on('ready', () => {
   globalShortcut.register('CmdOrCtrl+Shift+C', () => {
     win.show();
