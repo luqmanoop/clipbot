@@ -2,16 +2,17 @@ import React, { Component } from 'react';
 import ClipItem from './ClipItem';
 import Search from './Search';
 import { clipboard } from './utils/clipboardManager';
+import { numberKeys } from './utils/numberKeys';
 
 const { ipcRenderer } = window.require('electron');
 
 class App extends Component {
   constructor(props) {
     super(props);
-    const clipData = clipboard.init();
+    const clippings = clipboard.init();
     this.state = {
-      clipData,
-      searchResult: [...clipData]
+      clippings,
+      searchResult: [...clippings]
     };
   }
 
@@ -21,13 +22,29 @@ class App extends Component {
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;
     });
+
+    window.addEventListener('keyup', this.handleNumberKeyPressed);
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('keyup', this.handleNumberKeyPressed);
+  }
+
+  handleNumberKeyPressed = ({ keyCode, key }) => {
+    if (numberKeys[keyCode]) {
+      const { clippings } = this.state;
+      const clipIndex = key - 1;
+      const { clip } = clippings[clipIndex];
+
+      this.clipToClipboard(clip, clipIndex);
+    }
+  };
 
   addToClipboard = (e, clip) => {
     clipboard.add(clip).then(clipboardUpdate => {
       if (clipboardUpdate) {
         this.setState({
-          clipData: clipboardUpdate,
+          clippings: clipboardUpdate,
           searchResult: clipboardUpdate
         });
       }
@@ -36,17 +53,17 @@ class App extends Component {
 
   searchClipboard = e => {
     const searchQuery = e.target.value;
-    const { clipData } = this.state;
+    const { clippings } = this.state;
 
-    let searchResult = clipData.filter(({ clip }) => {
+    let searchResult = clippings.filter(({ clip }) => {
       return clip.toLowerCase().includes(searchQuery.toLowerCase());
     });
 
     this.setState({ searchResult });
   };
 
-  clipToClipboard(clip, oldClip) {
-    clipboard.remove(oldClip);
+  clipToClipboard(clip, oldClipIndex) {
+    clipboard.remove(oldClipIndex);
     ipcRenderer.send('clip:focus', clip);
   }
 
