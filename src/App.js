@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
-import faker from 'faker';
 
 import ClipItem from './ClipItem';
 import Search from './Search';
+import { clipboard } from './utils/storage';
 
 const { ipcRenderer } = window.require('electron');
 
 class App extends Component {
   constructor(props) {
     super(props);
-
-    const clipData = [];
-    for (let index = 0; index < 1; index++) {
-      clipData.push(faker.lorem.sentence());
-    }
-
+    const clipData = clipboard.init();
     this.state = {
       clipData,
       searchResult: [...clipData]
@@ -26,13 +21,13 @@ class App extends Component {
   }
 
   addToClipboard = (e, clip) => {
-    const { clipData: clippings } = this.state;
-    if (clippings[0] === clip) return;
-
-    clippings.unshift(clip);
-    this.setState({
-      clipData: clippings,
-      searchResult: clippings
+    clipboard.add(clip).then(clipboardUpdate => {
+      if (clipboardUpdate) {
+        this.setState({
+          clipData: clipboardUpdate,
+          searchResult: clipboardUpdate
+        });
+      }
     });
   };
 

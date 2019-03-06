@@ -5,7 +5,7 @@ class MainWindow {
     this.win = new BrowserWindow({
       width: 450,
       height: 400,
-      center: false,
+      center: true,
       frame: false,
       resizable: false,
       show: false,
