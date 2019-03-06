@@ -1,4 +1,4 @@
-import { BrowserWindow, globalShortcut } from 'electron';
+import { BrowserWindow, globalShortcut, ipcMain } from 'electron';
 
 class MainWindow {
   constructor(url) {
@@ -16,7 +16,12 @@ class MainWindow {
 
     this.win.loadURL(url);
     this.registerGlobalShortcuts();
+
     this.win.on('blur', this.win.hide);
+    this.win.on('focus', () => {
+      this.win.webContents.send('clip:scrollTop');
+    });
+
     return this.win;
   }
 

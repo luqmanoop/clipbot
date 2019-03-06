@@ -30,6 +30,12 @@ const save = clip => {
   localStorage.setItem(KEY, stringify(clippings));
 };
 
+const remove = index => {
+  const clippings = get(true);
+  clippings.splice(index, 1);
+  localStorage.setItem(KEY, stringify(clippings));
+};
+
 const add = data => {
   let updated = false;
   let clippings = get(true);
@@ -46,5 +52,6 @@ export const clipboard = {
   init,
   clear,
   add,
-  get
+  get,
+  remove
 };

@@ -94,6 +94,11 @@ body {
     color: darken($light-gray, 75%);
     cursor: default;
 
+    &:hover {
+      background: #333;
+      color: #fff;
+    }
+
     &:not(:last-child) {
       border-bottom: 1px solid $light-gray;
     }

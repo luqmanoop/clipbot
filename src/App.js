@@ -17,6 +17,10 @@ class App extends Component {
 
   componentDidMount() {
     ipcRenderer.on('clip:add', this.addToClipboard);
+    ipcRenderer.on('clip:scrollTop', () => {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    });
   }
 
   addToClipboard = (e, clip) => {
@@ -41,6 +45,11 @@ class App extends Component {
     this.setState({ searchResult });
   };
 
+  clipToClipboard(clip, oldClip) {
+    clipboard.remove(oldClip);
+    ipcRenderer.send('clip:focus', clip);
+  }
+
   render() {
     const { searchResult } = this.state;
     return (
@@ -51,7 +60,13 @@ class App extends Component {
             searchResult.map((item, index) => {
               const position = index < 9 ? index + 1 : null;
               const props = { item, position };
-              return <ClipItem key={item.createdAt} {...props} />;
+              return (
+                <ClipItem
+                  key={item.createdAt}
+                  {...props}
+                  handleClick={() => this.clipToClipboard(item.clip, index)}
+                />
+              );
             })
           ) : (
             <p className="no-result">No results found</p>

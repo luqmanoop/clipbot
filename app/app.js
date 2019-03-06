@@ -1,4 +1,4 @@
-import { app } from 'electron';
+import { app, ipcMain, clipboard } from 'electron';
 import MainWindow from './mainWindow';
 import ClipBot from './clipbot';
 
@@ -20,5 +20,9 @@ app.on('ready', () => {
     win.webContents.send('clip:add', { createdAt: Date.now(), clip });
   });
 
+  ipcMain.on('clip:focus', (e, clip) => {
+    app.hide();
+    clipboard.writeText(clip);
+  });
   cleanup(app);
 });
