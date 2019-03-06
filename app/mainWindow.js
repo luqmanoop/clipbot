@@ -1,4 +1,4 @@
-import { BrowserWindow, globalShortcut, ipcMain } from 'electron';
+import { BrowserWindow, globalShortcut } from 'electron';
 
 class MainWindow {
   constructor(url) {

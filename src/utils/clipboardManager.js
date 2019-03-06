@@ -1,4 +1,5 @@
 const KEY = 'clipboard';
+const MAX_CLIPPINGS = 200;
 
 const stringify = data => JSON.stringify(data);
 const parse = data => JSON.parse(data);
@@ -26,7 +27,14 @@ const clear = () => localStorage.setItem(KEY, intialClipboardState);
 
 const save = clip => {
   const clippings = get(true);
-  clippings.unshift(clip);
+
+  if (clippings.length >= MAX_CLIPPINGS) {
+    clippings.splice(clippings.length - 2, 1);
+    clippings.unshift(clip);
+  } else {
+    clippings.unshift(clip);
+  }
+
   localStorage.setItem(KEY, stringify(clippings));
 };
 
