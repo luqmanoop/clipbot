@@ -17,7 +17,7 @@ app.on('ready', () => {
 
   bot = new ClipBot(app);
   bot.watchClipboard(clip => {
-    win.webContents.send('clip:add', clip);
+    win.webContents.send('clip:add', { createdAt: Date.now(), clip });
   });
 
   cleanup(app);

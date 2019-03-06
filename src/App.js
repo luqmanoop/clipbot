@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-
 import ClipItem from './ClipItem';
 import Search from './Search';
-import { clipboard } from './utils/storage';
+import { clipboard } from './utils/clipboardManager';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -35,8 +34,8 @@ class App extends Component {
     const searchQuery = e.target.value;
     const { clipData } = this.state;
 
-    let searchResult = clipData.filter(clipItem => {
-      return clipItem.toLowerCase().includes(searchQuery.toLowerCase());
+    let searchResult = clipData.filter(({ clip }) => {
+      return clip.toLowerCase().includes(searchQuery.toLowerCase());
     });
 
     this.setState({ searchResult });
@@ -52,7 +51,7 @@ class App extends Component {
             searchResult.map((item, index) => {
               const position = index < 9 ? index + 1 : null;
               const props = { item, position };
-              return <ClipItem key={index} {...props} />;
+              return <ClipItem key={item.createdAt} {...props} />;
             })
           ) : (
             <p className="no-result">No results found</p>

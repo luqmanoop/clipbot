@@ -2,10 +2,12 @@ import { BrowserWindow, globalShortcut } from 'electron';
 
 class MainWindow {
   constructor(url) {
+    const WINDOW_WIDTH = 500;
+    const WINDOW_HEIGHT = 450;
+
     this.win = new BrowserWindow({
-      width: 450,
-      height: 400,
-      center: true,
+      width: WINDOW_WIDTH,
+      height: WINDOW_HEIGHT,
       frame: false,
       resizable: false,
       show: false,

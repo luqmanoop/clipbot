@@ -77,7 +77,7 @@ body {
   }
 
   #{$clip}-items {
-      padding-top: 5.1rem;
+    padding-top: 5.1rem;
 
     .no-result {
       display: flex;
@@ -88,8 +88,9 @@ body {
   }
 
   #{$clip}-item {
-    padding: 1.6rem;
+    padding: 1.6rem 1.6rem 0.8rem;
     display: flex;
+    flex-direction: column;
     color: darken($light-gray, 75%);
     cursor: default;
 
@@ -97,16 +98,26 @@ body {
       border-bottom: 1px solid $light-gray;
     }
 
-    p {
-      flex: 0 0 90%;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
+    .clip {
+      display: flex;
 
-    span {
-      flex: 1;
-      text-align: right;
+      p {
+        flex: 0 0 90%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      span {
+        flex: 1;
+        text-align: right;
+      }
+    }
+    .createdAt {
+      padding-top: 0.8rem;
+      font-size: 1.2rem;
+      color: darken($light-gray, 30%);
+      font-weight: 600;
     }
   }
 }
