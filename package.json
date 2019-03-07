@@ -1,5 +1,5 @@
 {
-  "name": "clip-bot",
+  "name": "clipbot",
   "version": "0.1.0",
   "private": true,
   "main": "dist/app.js",
@@ -12,7 +12,7 @@
   },
   "scripts": {
     "app": "electron .",
-    "app:build": "babel app -d dist",
+    "app:build": "babel app -d dist --copy-files",
     "start:dev": "npm run app:build && npm run app",
     "start": "nodemon --watch src --watch app --exec 'npm run start:dev'",
     "react": "react-scripts start",
