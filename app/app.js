@@ -50,5 +50,7 @@ app.on('ready', () => {
     clipboard.writeText(clip);
   });
 
+  ipcMain.on('clip:hide', app.hide);
+
   cleanup(app);
 });

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import searchIcon from './assets/search.svg';
 
+const { ipcRenderer } = window.require('electron');
+
 class Search extends Component {
   constructor(props) {
     super(props);
@@ -10,18 +12,36 @@ class Search extends Component {
 
   componentDidMount() {
     window.addEventListener('keyup', this.handleKeyUp);
+    this.search.current.addEventListener('focus', () =>
+      this.handleFocusChange(true)
+    );
   }
 
   componentWillUnmount() {
     window.removeEventListener('keyup', this.handleKeyUp);
   }
 
+  handleFocusChange = (isFocused = false) => {
+    if (!isFocused) {
+      this.search.current.blur();
+      this.search.current.classList.remove('focused');
+      return;
+    }
+
+    this.search.current.focus();
+    this.search.current.classList.add('focused');
+  };
+
   handleKeyUp = e => {
     const { keyCode } = e;
     if (keyCode === 191) {
-      this.search.current.focus();
+      this.handleFocusChange(true);
     } else if (keyCode === 27) {
-      this.search.current.blur();
+      if (!this.search.current.classList.contains('focused')) {
+        ipcRenderer.send('clip:hide');
+        return;
+      }
+      this.handleFocusChange();
     }
   };
 
