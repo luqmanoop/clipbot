@@ -1,7 +1,7 @@
 import { BrowserWindow, globalShortcut } from 'electron';
 
 class MainWindow {
-  constructor(url) {
+  constructor() {
     const WINDOW_WIDTH = 450;
     const WINDOW_HEIGHT = 400;
 
@@ -14,7 +14,6 @@ class MainWindow {
       webPreferences: { backgroundThrottling: false }
     });
 
-    this.win.loadURL(url);
     this.registerGlobalShortcuts();
 
     this.win.on('blur', this.win.hide);

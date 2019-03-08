@@ -1,4 +1,5 @@
 import { join } from 'path';
+import serve from 'electron-serve';
 
 import { app, clipboard, ipcMain, Menu } from 'electron';
 
@@ -10,9 +11,8 @@ let win;
 let bot;
 let tray;
 
+const loadURL = serve({ directory: 'build' });
 const trayIcon = join(__dirname, 'tray-icon.png');
-
-console.log(trayIcon);
 
 const cleanup = app => {
   app.on('quit', () => {
@@ -26,7 +26,9 @@ app.on('ready', () => {
   app.dock.hide();
   Menu.setApplicationMenu(Menu.buildFromTemplate([]));
 
-  win = new MainWindow('http://localhost:3000');
+  win = new MainWindow();
+  loadURL(win);
+
   tray = new ClipTray(trayIcon, app, win);
 
   bot = new ClipBot(app);
