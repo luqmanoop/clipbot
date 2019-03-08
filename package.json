@@ -6,6 +6,7 @@
   "dependencies": {
     "electron": "4.0.6",
     "faker": "4.1.0",
+    "ng-faker": "1.1.0",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-scripts": "2.1.5"
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@babel/cli": "7.2.3",
     "@babel/core": "7.3.4",
+    "@babel/plugin-proposal-class-properties": "7.3.4",
     "@babel/preset-env": "7.3.4",
     "node-sass": "4.11.0",
     "nodemon": "1.18.10"

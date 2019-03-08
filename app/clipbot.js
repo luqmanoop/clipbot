@@ -8,7 +8,7 @@ class ClipBot {
   watchClipboard(cb) {
     setInterval(() => {
       cb(this.clipboard.readText());
-    }, 1500);
+    }, 1000);
   }
 }
 

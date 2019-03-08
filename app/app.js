@@ -1,43 +1,27 @@
-import { app, ipcMain, clipboard, Tray, Menu, shell } from 'electron';
+import { app, clipboard, ipcMain } from 'electron';
 import { join } from 'path';
-
-import MainWindow from './mainWindow';
 import ClipBot from './clipbot';
+import ClipTray from './clipTray';
+import MainWindow from './mainWindow';
 
 let win;
 let bot;
 let tray;
 
+const trayIcon = join(__dirname, './icon.png');
+
 const cleanup = app => {
   app.on('quit', () => {
     win = null;
     bot = null;
+    tray = null;
   });
 };
 
 app.on('ready', () => {
   app.dock.hide();
-  tray = new Tray(join(__dirname, './icon.png'));
-  tray.setToolTip('ClipBot');
 
-  const contextMenu = Menu.buildFromTemplate([
-    {
-      label: 'Help',
-      click() {
-        shell.openExternal('https://github.com/codeshifu/clip-bot');
-      }
-    },
-    { type: 'separator' },
-    {
-      label: 'Quit ClipBot',
-      click() {
-        app.quit();
-      }
-    }
-  ]);
-
-  tray.setContextMenu(contextMenu);
-
+  tray = new ClipTray(trayIcon, app);
   win = new MainWindow('http://localhost:3000');
 
   bot = new ClipBot(app);

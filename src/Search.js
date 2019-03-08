@@ -12,7 +12,7 @@ class Search extends Component {
 
   componentDidMount() {
     window.addEventListener('keyup', this.handleKeyUp);
-    this.search.current.addEventListener('focus', () =>
+    this.searchElem().addEventListener('focus', () =>
       this.handleFocusChange(true)
     );
   }
@@ -21,15 +21,17 @@ class Search extends Component {
     window.removeEventListener('keyup', this.handleKeyUp);
   }
 
+  searchElem = () => this.search.current;
+
   handleFocusChange = (isFocused = false) => {
     if (!isFocused) {
-      this.search.current.blur();
-      this.search.current.classList.remove('focused');
+      this.searchElem().blur();
+      this.searchElem().classList.remove('focused');
       return;
     }
 
-    this.search.current.focus();
-    this.search.current.classList.add('focused');
+    this.searchElem().focus();
+    this.searchElem().classList.add('focused');
   };
 
   handleKeyUp = e => {
@@ -37,7 +39,7 @@ class Search extends Component {
     if (keyCode === 191) {
       this.handleFocusChange(true);
     } else if (keyCode === 27) {
-      if (!this.search.current.classList.contains('focused')) {
+      if (!this.searchElem().classList.contains('focused')) {
         ipcRenderer.send('clip:hide');
         return;
       }
