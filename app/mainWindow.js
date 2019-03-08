@@ -2,8 +2,8 @@ import { BrowserWindow, globalShortcut } from 'electron';
 
 class MainWindow {
   constructor(url) {
-    const WINDOW_WIDTH = 500;
-    const WINDOW_HEIGHT = 450;
+    const WINDOW_WIDTH = 450;
+    const WINDOW_HEIGHT = 400;
 
     this.win = new BrowserWindow({
       width: WINDOW_WIDTH,

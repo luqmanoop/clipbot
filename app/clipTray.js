@@ -5,12 +5,13 @@ import { Tray, Menu, shell, clipboard, Notification } from 'electron';
 import { trayFakerMenuWhitelist as menuWhitelist } from './utils';
 
 class ClipTray {
-  constructor(trayIcon, app) {
+  constructor(trayIcon, app, win) {
     this.tray = new Tray(trayIcon);
     this.tray.setToolTip('ClipBot');
-    this.buildMenu();
     this.app = app;
+    this.win = win;
 
+    this.buildMenu();
     return this.tray;
   }
 
@@ -20,38 +21,45 @@ class ClipTray {
     );
   }
 
-  showNotification = () => {
+  showNotification() {
     if (Notification.isSupported()) {
       new Notification({
         title: 'ClipBot',
         body: 'copied to clipboard!'
       }).show();
     }
-  };
+  }
+
+  getFakerMenu() {
+    const notify = this.showNotification;
+    return this.menuFilter(faker).map(menu => ({
+      label: menu,
+      submenu: [
+        ...this.menuFilter(faker[menu]).map(subMenu => ({
+          label: subMenu,
+          click() {
+            const fakeData = faker[menu][subMenu]();
+            clipboard.writeText(fakeData);
+            notify();
+          }
+        }))
+      ]
+    }));
+  }
 
   buildMenu() {
-    const notify = this.showNotification;
-
-    const fakerMenu = this.menuFilter(faker).map(menu => {
-      return {
-        label: menu,
-        submenu: [
-          ...this.menuFilter(faker[menu]).map(subMenu => ({
-            label: subMenu,
-            click() {
-              const fakeData = faker[menu][subMenu]();
-              clipboard.writeText(fakeData);
-              notify();
-            }
-          }))
-        ]
-      };
-    });
-
+    const fakerMenu = this.getFakerMenu();
+    const win = this.win;
     const contextMenu = Menu.buildFromTemplate([
       {
         label: 'Clip fake data',
         submenu: [...fakerMenu]
+      },
+      {
+        label: 'Show ClipBot',
+        click() {
+          win.show();
+        }
       },
       { type: 'separator' },
       {

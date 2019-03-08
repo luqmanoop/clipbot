@@ -10,7 +10,9 @@ let win;
 let bot;
 let tray;
 
-const trayIcon = join(__dirname, './icon.png');
+const trayIcon = join(__dirname, 'tray-icon.png');
+
+console.log(trayIcon);
 
 const cleanup = app => {
   app.on('quit', () => {
@@ -21,8 +23,9 @@ const cleanup = app => {
 };
 
 app.on('ready', () => {
-  Menu.setApplicationMenu(Menu.buildFromTemplate([]));
   app.dock.hide();
+  Menu.setApplicationMenu(Menu.buildFromTemplate([]));
+
   win = new MainWindow('http://localhost:3000');
   tray = new ClipTray(trayIcon, app, win);
 
