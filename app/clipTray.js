@@ -48,8 +48,10 @@ class ClipTray {
   }
 
   buildMenu() {
-    const fakerMenu = this.getFakerMenu();
     const win = this.win;
+    const app = this.app;
+
+    const fakerMenu = this.getFakerMenu();
     const contextMenu = Menu.buildFromTemplate([
       {
         label: 'Clip fake data',
@@ -78,7 +80,7 @@ class ClipTray {
       {
         label: 'Quit ClipBot',
         click() {
-          this.app.quit();
+          app.quit();
         }
       }
     ]);
