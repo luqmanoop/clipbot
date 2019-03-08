@@ -1,5 +1,7 @@
-import { app, clipboard, ipcMain } from 'electron';
 import { join } from 'path';
+
+import { app, clipboard, ipcMain, Menu } from 'electron';
+
 import ClipBot from './clipbot';
 import ClipTray from './clipTray';
 import MainWindow from './mainWindow';
@@ -19,10 +21,10 @@ const cleanup = app => {
 };
 
 app.on('ready', () => {
+  Menu.setApplicationMenu(Menu.buildFromTemplate([]));
   app.dock.hide();
-
-  tray = new ClipTray(trayIcon, app);
   win = new MainWindow('http://localhost:3000');
+  tray = new ClipTray(trayIcon, app, win);
 
   bot = new ClipBot(app);
   bot.watchClipboard(clip => {
