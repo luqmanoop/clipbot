@@ -54,6 +54,15 @@ class ClipTray {
     const fakerMenu = this.getFakerMenu();
     const contextMenu = Menu.buildFromTemplate([
       {
+        label: 'About ClipBot',
+        click() {
+          shell.openExternal('https://github.com/codeshifu/clipbot');
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
         label: 'Clip fake data',
         submenu: [...fakerMenu]
       },
@@ -64,12 +73,6 @@ class ClipTray {
         }
       },
       { type: 'separator' },
-      {
-        label: 'About',
-        click() {
-          shell.openExternal('https://github.com/codeshifu/clipbot');
-        }
-      },
       {
         label: 'Help',
         click() {

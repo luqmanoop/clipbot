@@ -21,8 +21,15 @@ const cleanup = app => {
   });
 };
 
+const launchOnSystemStartup = app => {
+  app.setLoginItemSettings({
+    openAtLogin: true
+  });
+};
+
 app.on('ready', () => {
   app.dock.hide();
+  launchOnSystemStartup(app);
   Menu.setApplicationMenu(Menu.buildFromTemplate([]));
 
   win = new MainWindow();
