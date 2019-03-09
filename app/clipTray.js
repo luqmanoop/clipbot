@@ -1,4 +1,4 @@
-import { clipboard, Menu, Notification, shell, Tray } from 'electron';
+import { clipboard, Menu, Notification, shell, Tray, dialog } from 'electron';
 import faker from 'faker';
 
 import { trayFakerMenuWhitelist as menuWhitelist } from './utils';
@@ -72,6 +72,27 @@ class ClipTray {
         }
       },
       { type: 'separator' },
+      {
+        label: 'Clear clipboard',
+        click() {
+          dialog.showMessageBox(
+            win,
+            {
+              type: 'warning',
+              message: 'You are about to clear the clipboard',
+              detail: 'All clipboard items will be permanently lost',
+              buttons: ['Clear clipboard', 'Cancel'],
+              cancelId: 1
+            },
+            indexOfClickedButton => {
+              if (indexOfClickedButton === 0) {
+                clipboard.clear();
+                win.webContents.send('clipboard:clear');
+              }
+            }
+          );
+        }
+      },
       {
         label: 'Help',
         click() {

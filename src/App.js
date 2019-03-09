@@ -22,6 +22,11 @@ class App extends Component {
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;
     });
+    ipcRenderer.on('clipboard:clear', () => {
+      clipboard.clear().then(clippings => {
+        this.setState({ clippings, searchResult: clippings });
+      });
+    });
 
     window.addEventListener('keyup', this.handleNumberKeyPressed);
   }

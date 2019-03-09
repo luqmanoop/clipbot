@@ -23,7 +23,10 @@ const init = () => {
   return get();
 };
 
-const clear = () => localStorage.setItem(KEY, intialClipboardState);
+const clear = () => {
+  localStorage.setItem(KEY, stringify(intialClipboardState));
+  return Promise.resolve(get());
+};
 
 const save = clip => {
   const clippings = get(true);
