@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import searchIcon from './assets/search.svg';
 
 const { ipcRenderer } = window.require('electron');

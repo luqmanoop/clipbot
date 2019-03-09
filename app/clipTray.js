@@ -1,6 +1,5 @@
+import { clipboard, Menu, Notification, shell, Tray } from 'electron';
 import faker from 'faker';
-
-import { Tray, Menu, shell, clipboard, Notification } from 'electron';
 
 import { trayFakerMenuWhitelist as menuWhitelist } from './utils';
 

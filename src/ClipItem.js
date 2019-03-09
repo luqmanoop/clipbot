@@ -1,5 +1,5 @@
-import React from 'react';
 import { distanceInWordsToNow } from 'date-fns';
+import React from 'react';
 
 const ClipItem = props => {
   const {

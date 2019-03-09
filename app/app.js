@@ -1,7 +1,6 @@
-import { join } from 'path';
-import serve from 'electron-serve';
-
 import { app, clipboard, ipcMain, Menu } from 'electron';
+import serve from 'electron-serve';
+import { join } from 'path';
 
 import ClipBot from './clipbot';
 import ClipTray from './clipTray';
@@ -11,7 +10,7 @@ let win;
 let bot;
 let tray;
 
-const trayIcon = join(__dirname, 'tray-icon.png');
+const trayIcon = join(__dirname, './icons/tray-icon.png');
 
 const cleanup = app => {
   app.on('quit', () => {

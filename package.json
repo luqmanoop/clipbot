@@ -14,7 +14,8 @@
   },
   "scripts": {
     "app": "electron .",
-    "app:build": "babel app -d dist --copy-files",
+    "clean": "rimraf dist",
+    "app:build": "npm run clean && babel app -d dist --copy-files",
     "start:dev": "npm run app:build && npm run app",
     "start": "nodemon --watch src --watch app --exec 'cross-env NODE_ENV=development npm run start:dev'",
     "react": "react-scripts start",
@@ -40,6 +41,7 @@
     "electron": "4.0.6",
     "electron-packager": "13.1.1",
     "node-sass": "4.11.0",
-    "nodemon": "1.18.10"
+    "nodemon": "1.18.10",
+    "rimraf": "2.6.3"
   }
 }
