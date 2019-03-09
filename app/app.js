@@ -11,7 +11,6 @@ let win;
 let bot;
 let tray;
 
-const loadURL = serve({ directory: 'build' });
 const trayIcon = join(__dirname, 'tray-icon.png');
 
 const cleanup = app => {
@@ -27,7 +26,12 @@ app.on('ready', () => {
   Menu.setApplicationMenu(Menu.buildFromTemplate([]));
 
   win = new MainWindow();
-  loadURL(win);
+  if (process.env.NODE_ENV === 'development') {
+    win.loadURL('http://localhost:3000');
+  } else {
+    const loadURL = serve({ directory: 'build' });
+    loadURL(win);
+  }
 
   tray = new ClipTray(trayIcon, app, win);
 
