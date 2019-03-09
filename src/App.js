@@ -40,8 +40,10 @@ class App extends Component {
     }
   };
 
-  addToClipboard = (e, clip) => {
-    clipboard.add(clip).then(clipboardUpdate => {
+  addToClipboard = (e, clipping) => {
+    if (!clipping.clip || !clipping.clip.length) return;
+
+    clipboard.add(clipping).then(clipboardUpdate => {
       if (clipboardUpdate) {
         this.setState({
           clippings: clipboardUpdate,
