@@ -1,4 +1,5 @@
 import { BrowserWindow, globalShortcut } from 'electron';
+import * as evt from './evt';
 
 class MainWindow {
   constructor() {
@@ -18,7 +19,7 @@ class MainWindow {
 
     this.win.on('blur', this.win.hide);
     this.win.on('focus', () => {
-      this.win.webContents.send('clip:scrollTop');
+      this.win.webContents.send(evt.SCROLL_TO_TOP);
     });
 
     return this.win;

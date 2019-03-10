@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+
 import ClipItem from './ClipItem';
 import Search from './Search';
 import { clipboard } from './utils/clipboardManager';
 import { numberKeys } from './utils/numberKeys';
+import * as evt from './app/evt';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -17,28 +19,28 @@ class App extends Component {
   }
 
   componentDidMount() {
-    ipcRenderer.on('clip:add', this.addToClipboard);
-    ipcRenderer.on('clip:scrollTop', () => {
+    ipcRenderer.on(evt.ADD, this.addToClipboard);
+    ipcRenderer.on(evt.SCROLL_TO_TOP, () => {
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;
     });
-    ipcRenderer.on('clipboard:clear', () => {
+    ipcRenderer.on(evt.CLEAR_OK, () => {
       clipboard.clear().then(clippings => {
         this.setState({ clippings, searchResult: clippings });
       });
     });
-    ipcRenderer.on('app:quit', () =>
+    ipcRenderer.on(evt.QUIT, () =>
       ipcRenderer.send(
-        'app:quit',
+        evt.QUIT_OK,
         this.confirmAction(
           "Are you sure?\nClipBot will stop collecting clippings if it isn't running"
         )
       )
     );
 
-    ipcRenderer.on('clear:clipboard', () =>
+    ipcRenderer.on(evt.CLEAR, () =>
       ipcRenderer.send(
-        'clear:clipboard',
+        evt.CLEAR_OK,
         this.confirmAction(
           'You are about to clear the clipboard\nAll clipboard items will be permanently lost'
         )
@@ -90,7 +92,7 @@ class App extends Component {
 
   clipToClipboard(clip, oldClipIndex) {
     clipboard.remove(oldClipIndex);
-    ipcRenderer.send('clip:focus', clip);
+    ipcRenderer.send(evt.FOCUS, clip);
   }
 
   render() {

@@ -1,4 +1,5 @@
 import { clipboard } from 'electron';
+import * as evt from './evt';
 
 class ClipBot {
   constructor(app, win) {
@@ -21,7 +22,7 @@ class ClipBot {
 
   clear() {
     this.clipboard.clear();
-    this.win.webContents.send('clipboard:clear');
+    this.win.webContents.send(evt.CLEAR_OK);
   }
 }
 

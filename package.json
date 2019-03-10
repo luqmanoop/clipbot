@@ -18,9 +18,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build:react": "react-scripts build",
-    "build:electron": "babel app -d dist --copy-files",
-    "build:package": "npx electron-packager . --overwrite --platform=darwin --arch=x64 --icon=app/icons/mac/icon.icns --prune=true --out=release-builds",
-    "build:dmg": "npx electron-installer-dmg release-builds/ClipBot-darwin-x64/ClipBot.app ClipBot --out=release-builds/mac --icon=app/icons/mac/icon.icns",
+    "build:electron": "babel src/app -d dist --copy-files",
+    "build:package": "npx electron-packager . --overwrite --platform=darwin --arch=x64 --icon=dist/icons/mac/icon.icns --prune=true --out=release-builds",
+    "build:dmg": "npx electron-installer-dmg release-builds/ClipBot-darwin-x64/ClipBot.app ClipBot --out=release-builds/mac --icon=dist/icons/mac/icon.icns",
     "prod": "npm-run-all clean build:*"
   },
   "eslintConfig": {

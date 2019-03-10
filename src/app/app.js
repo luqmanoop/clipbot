@@ -5,6 +5,7 @@ import { join } from 'path';
 import ClipBot from './clipbot';
 import ClipTray from './clipTray';
 import MainWindow from './mainWindow';
+import * as evt from './evt';
 
 let win;
 let bot;
@@ -49,17 +50,17 @@ app.on('ready', () => {
   tray = new ClipTray(trayIcon, win, bot);
 
   bot.watchClipboard(clip => {
-    win.webContents.send('clip:add', { createdAt: Date.now(), clip });
+    win.webContents.send(evt.ADD, { createdAt: Date.now(), clip });
   });
 
-  ipcMain.on('clip:focus', (e, clip) => {
+  ipcMain.on(evt.FOCUS, (e, clip) => {
     app.hide();
     clipboard.writeText(clip);
   });
 
-  ipcMain.on('clip:hide', app.hide);
-  ipcMain.on('app:quit', (e, shouldQuit) => shouldQuit && bot.stopAndQuit());
-  ipcMain.on('clear:clipboard', (e, shouldClear) => shouldClear && bot.clear());
+  ipcMain.on(evt.HIDE, app.hide);
+  ipcMain.on(evt.QUIT_OK, (e, shouldQuit) => shouldQuit && bot.stopAndQuit());
+  ipcMain.on(evt.CLEAR_OK, (e, shouldClear) => shouldClear && bot.clear());
 
   cleanup();
 });
