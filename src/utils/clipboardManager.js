@@ -1,5 +1,5 @@
 const KEY = 'clipboard';
-const MAX_CLIPPINGS = 200;
+const MAX_CLIPPINGS = 100;
 
 const stringify = data => JSON.stringify(data);
 const parse = data => JSON.parse(data);
