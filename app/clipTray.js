@@ -1,14 +1,22 @@
-import { clipboard, Menu, Notification, shell, Tray, dialog } from 'electron';
+import {
+  clipboard,
+  Menu,
+  Notification,
+  shell,
+  Tray,
+  dialog,
+  BrowserWindow
+} from 'electron';
 import faker from 'faker';
 
 import { trayFakerMenuWhitelist as menuWhitelist } from './utils';
 
 class ClipTray {
-  constructor(trayIcon, app, win) {
+  constructor(trayIcon, win, bot) {
     this.tray = new Tray(trayIcon);
     this.tray.setToolTip('ClipBot');
-    this.app = app;
     this.win = win;
+    this.bot = bot;
 
     this.buildMenu();
     return this.tray;
@@ -47,6 +55,7 @@ class ClipTray {
   }
 
   showDialog(win, message, detail, buttons, cb, type = 'warning') {
+    win.setSheetOffset(-100);
     dialog.showMessageBox(
       win,
       {
@@ -62,6 +71,7 @@ class ClipTray {
 
   buildMenu() {
     const win = this.win;
+    const bot = this.bot;
 
     const fakerMenu = this.getFakerMenu();
     const showDialog = this.showDialog;
@@ -91,18 +101,7 @@ class ClipTray {
         label: 'Clear clipboard',
         click() {
           if (!win.isVisible()) win.show();
-          showDialog(
-            win,
-            'You are about to clear the clipboard',
-            'All clipboard items will be permanently lost',
-            ['Clear clipboard', 'Cancel'],
-            indexOfClickedButton => {
-              if (indexOfClickedButton === 0) {
-                clipboard.clear();
-                win.webContents.send('clipboard:clear');
-              }
-            }
-          );
+          win.webContents.send('clear:clipboard');
         }
       },
       {
@@ -116,17 +115,7 @@ class ClipTray {
         label: 'Quit ClipBot',
         click() {
           if (!win.isVisible()) win.show();
-          showDialog(
-            win,
-            'Are you sure?',
-            "ClipBot will stop collecting clippings if it isn't running",
-            ['Quit', 'Cancel'],
-            indexOfClickedButton => {
-              if (indexOfClickedButton === 0) {
-                win.destroy();
-              }
-            }
-          );
+          win.webContents.send('app:quit');
         }
       }
     ]);

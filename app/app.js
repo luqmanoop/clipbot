@@ -19,7 +19,10 @@ const cleanup = () => {
     tray = null;
   });
 
-  win.on('closed', () => (win = null));
+  win.on('closed', () => {
+    win = null;
+    app.quit();
+  });
 };
 
 const launchOnSystemStartup = app => {
@@ -27,12 +30,12 @@ const launchOnSystemStartup = app => {
     openAtLogin: true
   });
 };
-launchOnSystemStartup(app);
 
 const loadURL = serve({ directory: 'build' });
 
 app.on('ready', () => {
   app.dock.hide();
+  launchOnSystemStartup(app);
   Menu.setApplicationMenu(Menu.buildFromTemplate([]));
 
   win = new MainWindow();
@@ -42,9 +45,9 @@ app.on('ready', () => {
     loadURL(win);
   }
 
-  tray = new ClipTray(trayIcon, app, win);
+  bot = new ClipBot(app, win);
+  tray = new ClipTray(trayIcon, win, bot);
 
-  bot = new ClipBot(app);
   bot.watchClipboard(clip => {
     win.webContents.send('clip:add', { createdAt: Date.now(), clip });
   });
@@ -55,6 +58,8 @@ app.on('ready', () => {
   });
 
   ipcMain.on('clip:hide', app.hide);
+  ipcMain.on('app:quit', (e, shouldQuit) => shouldQuit && bot.stopAndQuit());
+  ipcMain.on('clear:clipboard', (e, shouldClear) => shouldClear && bot.clear());
 
   cleanup();
 });

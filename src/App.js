@@ -27,6 +27,23 @@ class App extends Component {
         this.setState({ clippings, searchResult: clippings });
       });
     });
+    ipcRenderer.on('app:quit', () =>
+      ipcRenderer.send(
+        'app:quit',
+        this.confirmAction(
+          "Are you sure?\nClipBot will stop collecting clippings if it isn't running"
+        )
+      )
+    );
+
+    ipcRenderer.on('clear:clipboard', () =>
+      ipcRenderer.send(
+        'clear:clipboard',
+        this.confirmAction(
+          'You are about to clear the clipboard\nAll clipboard items will be permanently lost'
+        )
+      )
+    );
 
     window.addEventListener('keyup', this.handleNumberKeyPressed);
   }
@@ -34,6 +51,8 @@ class App extends Component {
   componentWillUnmount() {
     window.removeEventListener('keyup', this.handleNumberKeyPressed);
   }
+
+  confirmAction = msg => window.confirm(msg);
 
   handleNumberKeyPressed = ({ keyCode, key }) => {
     if (numberKeys[keyCode]) {
