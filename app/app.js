@@ -25,17 +25,18 @@ const launchOnSystemStartup = app => {
     openAtLogin: true
   });
 };
+launchOnSystemStartup(app);
+
+const loadURL = serve({ directory: 'build' });
 
 app.on('ready', () => {
   app.dock.hide();
-  launchOnSystemStartup(app);
   Menu.setApplicationMenu(Menu.buildFromTemplate([]));
 
   win = new MainWindow();
   if (process.env.NODE_ENV === 'development') {
     win.loadURL('http://localhost:3000');
   } else {
-    const loadURL = serve({ directory: 'build' });
     loadURL(win);
   }
 

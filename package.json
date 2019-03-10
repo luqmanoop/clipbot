@@ -7,21 +7,21 @@
   "dependencies": {
     "date-fns": "1.30.1",
     "electron-serve": "0.2.0",
-    "faker": "4.1.0",
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3",
-    "react-scripts": "2.1.5"
+    "faker": "4.1.0"
   },
   "scripts": {
     "app": "electron .",
-    "clean": "rimraf dist",
-    "app:build": "npm run clean && babel app -d dist --copy-files",
+    "clean": "rimraf dist build release-builds",
     "start:dev": "npm run app:build && npm run app",
     "start": "nodemon --watch src --watch app --exec 'cross-env NODE_ENV=development npm run start:dev'",
     "react": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:react": "react-scripts build",
+    "build:electron": "babel app -d dist --copy-files",
+    "build:package": "npx electron-packager . --overwrite --platform=darwin --arch=x64 --icon=app/icons/mac/icon.icns --prune=true --out=release-builds",
+    "build:dmg": "npx electron-installer-dmg release-builds/ClipBot-darwin-x64/ClipBot.app ClipBot --out=release-builds/mac --icon=app/icons/mac/icon.icns",
+    "prod": "npm-run-all clean build:*"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -39,9 +39,14 @@
     "@babel/preset-env": "7.3.4",
     "cross-env": "5.2.0",
     "electron": "4.0.6",
+    "electron-installer-dmg": "2.0.0",
     "electron-packager": "13.1.1",
     "node-sass": "4.11.0",
     "nodemon": "1.18.10",
+    "npm-run-all": "4.1.5",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "react-scripts": "2.1.5",
     "rimraf": "2.6.3"
   }
 }
