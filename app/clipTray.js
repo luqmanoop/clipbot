@@ -1,12 +1,4 @@
-import {
-  clipboard,
-  Menu,
-  Notification,
-  shell,
-  Tray,
-  dialog,
-  BrowserWindow
-} from 'electron';
+import { clipboard, Menu, Notification, shell, Tray, dialog } from 'electron';
 import faker from 'faker';
 
 import { trayFakerMenuWhitelist as menuWhitelist } from './utils';
@@ -71,10 +63,7 @@ class ClipTray {
 
   buildMenu() {
     const win = this.win;
-    const bot = this.bot;
-
     const fakerMenu = this.getFakerMenu();
-    const showDialog = this.showDialog;
 
     const contextMenu = Menu.buildFromTemplate([
       {
@@ -92,6 +81,7 @@ class ClipTray {
       },
       {
         label: 'Show ClipBot',
+        accelerator: 'CmdOrCtrl+Shift+C',
         click() {
           win.show();
         }
@@ -113,6 +103,7 @@ class ClipTray {
       { type: 'separator' },
       {
         label: 'Quit ClipBot',
+        accelerator: 'CmdOrCtrl+Q',
         click() {
           if (!win.isVisible()) win.show();
           win.webContents.send('app:quit');
