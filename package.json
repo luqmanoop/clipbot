@@ -12,7 +12,7 @@
   "scripts": {
     "app": "electron .",
     "clean": "rimraf dist build release-builds",
-    "start:dev": "npm run app:build && npm run app",
+    "start:dev": "npm run build:electron && npm run app",
     "start": "nodemon --watch src --watch app --exec 'cross-env NODE_ENV=development npm run start:dev'",
     "react": "react-scripts start",
     "test": "react-scripts test",

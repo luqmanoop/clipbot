@@ -46,11 +46,26 @@ class ClipTray {
     }));
   }
 
+  showDialog(win, message, detail, buttons, cb, type = 'warning') {
+    dialog.showMessageBox(
+      win,
+      {
+        type,
+        message,
+        detail,
+        buttons,
+        cancelId: 1
+      },
+      cb
+    );
+  }
+
   buildMenu() {
     const win = this.win;
-    const app = this.app;
 
     const fakerMenu = this.getFakerMenu();
+    const showDialog = this.showDialog;
+
     const contextMenu = Menu.buildFromTemplate([
       {
         label: 'About ClipBot',
@@ -75,15 +90,12 @@ class ClipTray {
       {
         label: 'Clear clipboard',
         click() {
-          dialog.showMessageBox(
+          if (!win.isVisible()) win.show();
+          showDialog(
             win,
-            {
-              type: 'warning',
-              message: 'You are about to clear the clipboard',
-              detail: 'All clipboard items will be permanently lost',
-              buttons: ['Clear clipboard', 'Cancel'],
-              cancelId: 1
-            },
+            'You are about to clear the clipboard',
+            'All clipboard items will be permanently lost',
+            ['Clear clipboard', 'Cancel'],
             indexOfClickedButton => {
               if (indexOfClickedButton === 0) {
                 clipboard.clear();
@@ -103,7 +115,18 @@ class ClipTray {
       {
         label: 'Quit ClipBot',
         click() {
-          app.quit();
+          if (!win.isVisible()) win.show();
+          showDialog(
+            win,
+            'Are you sure?',
+            "ClipBot will stop collecting clippings if it isn't running",
+            ['Quit', 'Cancel'],
+            indexOfClickedButton => {
+              if (indexOfClickedButton === 0) {
+                win.destroy();
+              }
+            }
+          );
         }
       }
     ]);

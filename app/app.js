@@ -12,12 +12,14 @@ let tray;
 
 const trayIcon = join(__dirname, './icons/tray-icon.png');
 
-const cleanup = app => {
+const cleanup = () => {
   app.on('quit', () => {
     win = null;
     bot = null;
     tray = null;
   });
+
+  win.on('closed', () => (win = null));
 };
 
 const launchOnSystemStartup = app => {
@@ -54,5 +56,5 @@ app.on('ready', () => {
 
   ipcMain.on('clip:hide', app.hide);
 
-  cleanup(app);
+  cleanup();
 });
