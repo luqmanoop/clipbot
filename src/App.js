@@ -47,16 +47,18 @@ class App extends Component {
       )
     );
 
-    window.addEventListener('keyup', this.handleNumberKeyPressed);
+    window.addEventListener('keyup', this.handleNumpadPressed);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('keyup', this.handleNumberKeyPressed);
+    window.removeEventListener('keyup', this.handleNumpadPressed);
   }
 
   confirmAction = msg => window.confirm(msg);
 
-  handleNumberKeyPressed = ({ keyCode, key }) => {
+  handleNumpadPressed = ({ target: elem, keyCode, key }) => {
+    if (elem.target.classList.contains('search-box')) return;
+
     if (numberKeys[keyCode]) {
       const { clippings } = this.state;
       const clipIndex = key - 1;
