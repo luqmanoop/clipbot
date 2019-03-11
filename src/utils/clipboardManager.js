@@ -53,11 +53,17 @@ const add = data => {
   let updated = false;
   let clippings = get(true);
 
-  if (clippings[0].clip !== data.clip) {
-    save(data);
-    updated = true;
-  }
+  const foundClipIndex = clippings.findIndex(
+    clipItem => clipItem.clip === data.clip
+  );
 
+  if (foundClipIndex < 0) {
+    save(data);
+  } else {
+    remove(clippings[foundClipIndex]);
+    return add(data);
+  }
+  updated = true;
   return Promise.resolve(updated ? get() : null);
 };
 
