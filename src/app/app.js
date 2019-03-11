@@ -26,9 +26,9 @@ const cleanup = () => {
   });
 };
 
-const launchOnSystemStartup = app => {
+const launchOnSystemStartup = (app, launch) => {
   app.setLoginItemSettings({
-    openAtLogin: true
+    openAtLogin: launch
   });
 };
 
@@ -36,7 +36,6 @@ const loadURL = serve({ directory: 'build' });
 
 app.on('ready', () => {
   app.dock.hide();
-  launchOnSystemStartup(app);
   Menu.setApplicationMenu(Menu.buildFromTemplate([]));
 
   win = new MainWindow();
@@ -62,5 +61,11 @@ app.on('ready', () => {
   ipcMain.on(evt.QUIT_OK, (e, shouldQuit) => shouldQuit && bot.stopAndQuit());
   ipcMain.on(evt.CLEAR_OK, (e, shouldClear) => shouldClear && bot.clear());
 
+  ipcMain.on(evt.LAUNCH_AT_LOGIN, (e, shouldLaunch) => {
+    launchOnSystemStartup(app, shouldLaunch);
+  });
+  win.webContents.on('did-finish-load', () => {
+    win.webContents.send(evt.LAUNCH_AT_LOGIN);
+  });
   cleanup();
 });

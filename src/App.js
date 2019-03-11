@@ -18,16 +18,29 @@ class App extends Component {
   }
 
   componentDidMount() {
+    ipcRenderer.on(evt.LAUNCH_AT_LOGIN, () => {
+      const shouldLaunch = clipboard.getLaunchAtLogin();
+      ipcRenderer.send(evt.LAUNCH_AT_LOGIN, shouldLaunch);
+    });
+
+    ipcRenderer.on(evt.UPDATE_LAUNCH_AT_LOGIN_STATUS, (e, launch) => {
+      clipboard.setLaunchAtLogin(launch);
+      ipcRenderer.send(evt.LAUNCH_AT_LOGIN, launch);
+    });
+
     ipcRenderer.on(evt.ADD, this.addToClipboard);
+
     ipcRenderer.on(evt.SCROLL_TO_TOP, () => {
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;
     });
+
     ipcRenderer.on(evt.CLEAR_OK, () => {
       clipboard.clear().then(clippings => {
         this.setState({ clippings, searchResult: clippings });
       });
     });
+
     ipcRenderer.on(evt.QUIT, () =>
       ipcRenderer.send(
         evt.QUIT_OK,

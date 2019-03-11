@@ -1,4 +1,5 @@
 const KEY = 'clipboard';
+const LAUNCH_AT_LOGIN = 'launch';
 const MAX_CLIPPINGS = 100;
 
 const stringify = data => JSON.stringify(data);
@@ -67,10 +68,18 @@ const add = data => {
   return Promise.resolve(updated ? get() : null);
 };
 
+const getLaunchAtLogin = () =>
+  parse(localStorage.getItem(LAUNCH_AT_LOGIN) || 'true');
+
+const setLaunchAtLogin = shouldLaunch =>
+  localStorage.setItem(LAUNCH_AT_LOGIN, shouldLaunch);
+
 export const clipboard = {
   init,
   clear,
   add,
   get,
-  remove
+  remove,
+  getLaunchAtLogin,
+  setLaunchAtLogin
 };

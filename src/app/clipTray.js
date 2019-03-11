@@ -1,4 +1,4 @@
-import { Menu, shell, Tray } from 'electron';
+import { Menu, shell, Tray, ipcMain } from 'electron';
 
 import AppMenu from './menu';
 import * as evt from './evt';
@@ -41,6 +41,22 @@ class ClipTray {
       },
       { type: 'separator' },
       {
+        label: 'Preferences',
+        submenu: [
+          {
+            label: 'Launch at Login',
+            id: 'launch-at-login',
+            type: 'checkbox',
+            click(menuItem) {
+              win.webContents.send(
+                evt.UPDATE_LAUNCH_AT_LOGIN_STATUS,
+                menuItem.checked
+              );
+            }
+          }
+        ]
+      },
+      {
         label: 'Clear clipboard',
         click() {
           if (!win.isVisible()) win.show();
@@ -63,6 +79,11 @@ class ClipTray {
         }
       }
     ]);
+
+    ipcMain.on(evt.LAUNCH_AT_LOGIN, (e, shouldLaunch) => {
+      const menuItem = contextMenu.getMenuItemById('launch-at-login');
+      menuItem.checked = shouldLaunch;
+    });
 
     this.tray.setContextMenu(contextMenu);
   }
