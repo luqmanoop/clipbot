@@ -97,9 +97,9 @@ class App extends Component {
     this.setState({ searchResult });
   };
 
-  clipToClipboard(clip, oldClipIndex) {
-    clipboard.remove(oldClipIndex);
-    ipcRenderer.send(evt.CLIP_SELECTED, clip);
+  clipToClipboard(clipItem) {
+    clipboard.remove(clipItem);
+    ipcRenderer.send(evt.CLIP_SELECTED, clipItem.clip);
   }
 
   render() {
@@ -116,7 +116,7 @@ class App extends Component {
                 <ClipItem
                   key={item.createdAt}
                   {...props}
-                  handleClick={() => this.clipToClipboard(item.clip, index)}
+                  handleClick={() => this.clipToClipboard(item)}
                 />
               );
             })

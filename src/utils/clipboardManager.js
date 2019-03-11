@@ -41,9 +41,11 @@ const save = clip => {
   localStorage.setItem(KEY, stringify(clippings));
 };
 
-const remove = index => {
-  const clippings = get(true);
-  clippings.splice(index, 1);
+const remove = ({ clip, createdAt }) => {
+  let clippings = get(true);
+  clippings = clippings.filter(clipItem => {
+    return clipItem.clip !== clip && clipItem.createdAt !== createdAt;
+  });
   localStorage.setItem(KEY, stringify(clippings));
 };
 
