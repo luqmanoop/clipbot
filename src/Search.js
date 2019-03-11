@@ -15,6 +15,11 @@ class Search extends Component {
     this.searchElem().addEventListener('focus', () =>
       this.handleFocusChange(true)
     );
+
+    ipcRenderer.on(evt.FOCUS_RESET, () => {
+      this.searchElem().value = '';
+      this.handleFocusChange();
+    });
   }
 
   componentWillUnmount() {

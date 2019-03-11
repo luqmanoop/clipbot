@@ -47,6 +47,11 @@ class App extends Component {
       )
     );
 
+    ipcRenderer.on(evt.FOCUS_RESET, () => {
+      const { clippings } = this.state;
+      this.setState({ searchResult: clippings });
+    });
+
     window.addEventListener('keyup', this.handleNumpadPressed);
   }
 

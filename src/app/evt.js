@@ -2,7 +2,7 @@ export const ADD = 'ADD';
 
 export const SCROLL_TO_TOP = 'SCROLL_TO_TOP';
 
-export const FOCUS = 'FOCUS';
+export const FOCUS_RESET = 'FOCUS_RESET';
 export const HIDE = 'HIDE';
 
 export const CLIP_SELECTED = 'CLIP_SELECTED';

@@ -28,6 +28,7 @@ class MainWindow {
   registerGlobalShortcuts() {
     globalShortcut.register('CmdOrCtrl+Shift+C', () => {
       this.win.show();
+      this.win.webContents.send(evt.FOCUS_RESET);
     });
   }
 }
