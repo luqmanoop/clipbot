@@ -53,7 +53,7 @@ app.on('ready', () => {
     win.webContents.send(evt.ADD, { createdAt: Date.now(), clip });
   });
 
-  ipcMain.on(evt.FOCUS, (e, clip) => {
+  ipcMain.on(evt.CLIP_SELECTED, (e, clip) => {
     app.hide();
     clipboard.writeText(clip);
   });

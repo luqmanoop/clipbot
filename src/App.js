@@ -92,7 +92,7 @@ class App extends Component {
 
   clipToClipboard(clip, oldClipIndex) {
     clipboard.remove(oldClipIndex);
-    ipcRenderer.send(evt.FOCUS, clip);
+    ipcRenderer.send(evt.CLIP_SELECTED, clip);
   }
 
   render() {
