@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 
-import ClipItem from './ClipItem';
 import Search from './Search';
 import { clipboard } from './utils/clipboardManager';
-import { numberKeys } from './utils/numberKeys';
 import * as evt from './app/evt';
+import Clippings from './Clippings';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -51,27 +50,9 @@ class App extends Component {
       const { clippings } = this.state;
       this.setState({ searchResult: clippings });
     });
-
-    window.addEventListener('keyup', this.handleNumpadPressed);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('keyup', this.handleNumpadPressed);
   }
 
   confirmAction = msg => window.confirm(msg);
-
-  handleNumpadPressed = ({ target: elem, keyCode, key }) => {
-    if (elem.target.classList.contains('search-box')) return;
-
-    if (numberKeys[keyCode]) {
-      const { clippings } = this.state;
-      const clipIndex = key - 1;
-      const { clip } = clippings[clipIndex];
-
-      this.clipToClipboard(clip, clipIndex);
-    }
-  };
 
   addToClipboard = (e, clipping) => {
     if (!clipping.clip || !clipping.clip.length) return;
@@ -97,33 +78,12 @@ class App extends Component {
     this.setState({ searchResult });
   };
 
-  clipToClipboard(clipItem) {
-    clipboard.remove(clipItem);
-    ipcRenderer.send(evt.CLIP_SELECTED, clipItem.clip);
-  }
-
   render() {
-    const { searchResult } = this.state;
+    const { searchResult, clippings } = this.state;
     return (
       <div className="clipboard">
         <Search handleSearch={this.searchClipboard} />
-        <div className="clipboard-items">
-          {searchResult.length ? (
-            searchResult.map((item, index) => {
-              const position = index < 9 ? index + 1 : null;
-              const props = { item, position };
-              return (
-                <ClipItem
-                  key={item.createdAt}
-                  {...props}
-                  handleClick={() => this.clipToClipboard(item)}
-                />
-              );
-            })
-          ) : (
-            <p className="no-result">No results found</p>
-          )}
-        </div>
+        <Clippings data={{ searchResult, clippings }} />
       </div>
     );
   }
