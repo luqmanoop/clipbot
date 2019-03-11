@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import searchIcon from './assets/search.svg';
+import * as evt from './app/evt';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -39,7 +40,7 @@ class Search extends Component {
       this.handleFocusChange(true);
     } else if (keyCode === 27) {
       if (!this.searchElem().classList.contains('focused')) {
-        ipcRenderer.send('clip:hide');
+        ipcRenderer.send(evt.HIDE);
         return;
       }
       this.handleFocusChange();
