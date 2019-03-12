@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import searchIcon from './assets/search.svg';
 import * as evt from './app/evt';
+import IPC from './utils/ipc';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -16,7 +17,7 @@ class Search extends Component {
       this.handleFocusChange(true)
     );
 
-    ipcRenderer.on(evt.FOCUS_RESET, () => {
+    IPC.onFocusReset(() => {
       this.searchElem().value = '';
       this.handleFocusChange();
     });
@@ -27,17 +28,6 @@ class Search extends Component {
   }
 
   searchElem = () => this.search.current;
-
-  handleFocusChange = (isFocused = false) => {
-    if (!isFocused) {
-      this.searchElem().blur();
-      this.searchElem().classList.remove('focused');
-      return;
-    }
-
-    this.searchElem().focus();
-    this.searchElem().classList.add('focused');
-  };
 
   handleKeyUp = e => {
     const { keyCode } = e;
@@ -50,6 +40,20 @@ class Search extends Component {
       }
       this.handleFocusChange();
     }
+  };
+
+  handleFocusChange = (isFocused = false) => {
+    if (!isFocused) {
+      this.searchElem().value = '';
+      this.searchElem().blur();
+      this.searchElem().classList.remove('focused');
+      this.props.onSearchBlur();
+      return;
+    }
+
+    this.searchElem().focus();
+    this.searchElem().classList.add('focused');
+    this.props.onSearchFocus();
   };
 
   render() {

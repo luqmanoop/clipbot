@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 
 import Search from './Search';
 import { clipboard } from './utils/clipboardManager';
-import * as evt from './app/evt';
 import Clippings from './Clippings';
-
-const { ipcRenderer } = window.require('electron');
+import IPC from './utils/ipc';
 
 class App extends Component {
   constructor(props) {
@@ -13,70 +11,36 @@ class App extends Component {
     const clippings = clipboard.init();
     this.state = {
       clippings,
-      searchResult: [...clippings]
+      searchResult: [...clippings],
+      searchFocus: false
     };
   }
 
   componentDidMount() {
-    ipcRenderer.on(evt.LAUNCH_AT_LOGIN, () => {
-      const shouldLaunch = clipboard.getLaunchAtLogin();
-      ipcRenderer.send(evt.LAUNCH_AT_LOGIN, shouldLaunch);
-    });
+    const ipc = new IPC();
+    ipc.registerEvents();
 
-    ipcRenderer.on(evt.UPDATE_LAUNCH_AT_LOGIN_STATUS, (e, launch) => {
-      clipboard.setLaunchAtLogin(launch);
-      ipcRenderer.send(evt.LAUNCH_AT_LOGIN, launch);
-    });
+    IPC.onClipboardAdd(this.addToClipboard);
 
-    ipcRenderer.on(evt.ADD, this.addToClipboard);
+    IPC.onFocusReset(() => this.resetSearchResult);
 
-    ipcRenderer.on(evt.SCROLL_TO_TOP, () => {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
-    });
-
-    ipcRenderer.on(evt.CLEAR_OK, () => {
-      clipboard.clear().then(clippings => {
-        this.setState({ clippings, searchResult: clippings });
-      });
-    });
-
-    ipcRenderer.on(evt.QUIT, () =>
-      ipcRenderer.send(
-        evt.QUIT_OK,
-        this.confirmAction(
-          "Are you sure?\nClipBot will stop collecting clippings if it isn't running"
-        )
-      )
-    );
-
-    ipcRenderer.on(evt.CLEAR, () =>
-      ipcRenderer.send(
-        evt.CLEAR_OK,
-        this.confirmAction(
-          'You are about to clear the clipboard\nAll clipboard items will be permanently lost'
-        )
-      )
-    );
-
-    ipcRenderer.on(evt.FOCUS_RESET, () => {
-      const { clippings } = this.state;
-      this.setState({ searchResult: clippings });
+    IPC.onClearOk(clippings => {
+      this.setState({ clippings, searchResult: clippings });
     });
   }
 
-  confirmAction = msg => window.confirm(msg);
-
   addToClipboard = (e, clipping) => {
     if (!clipping.clip || !clipping.clip.length) return;
-
-    clipboard.add(clipping).then(clipboardUpdate => {
-      if (clipboardUpdate) {
-        this.setState({
-          clippings: clipboardUpdate,
-          searchResult: clipboardUpdate
+    const { searchFocus } = this.state;
+    clipboard.add(clipping).then(clippingsUpdate => {
+      if (clippingsUpdate && !searchFocus) {
+        return this.setState({
+          clippings: clippingsUpdate,
+          searchResult: clippingsUpdate
         });
       }
+
+      this.setState({ clippings: clippingsUpdate });
     });
   };
 
@@ -91,11 +55,22 @@ class App extends Component {
     this.setState({ searchResult });
   };
 
+  handleSearchFocus = () => this.setState({ searchFocus: true });
+
+  resetSearchResult = () => {
+    const { clippings } = this.state;
+    this.setState({ searchResult: clippings, searchFocus: false });
+  };
+
   render() {
     const { searchResult, clippings } = this.state;
     return (
       <div className="clipboard">
-        <Search handleSearch={this.searchClipboard} />
+        <Search
+          handleSearch={this.searchClipboard}
+          onSearchBlur={this.resetSearchResult}
+          onSearchFocus={this.handleSearchFocus}
+        />
         <Clippings data={{ searchResult, clippings }} />
       </div>
     );

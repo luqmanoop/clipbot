@@ -39,6 +39,13 @@ class ClipTray {
           win.show();
         }
       },
+      {
+        label: 'Clear clipboard',
+        click() {
+          if (!win.isVisible()) win.show();
+          win.webContents.send(evt.CLEAR);
+        }
+      },
       { type: 'separator' },
       {
         label: 'Preferences',
@@ -55,13 +62,6 @@ class ClipTray {
             }
           }
         ]
-      },
-      {
-        label: 'Clear clipboard',
-        click() {
-          if (!win.isVisible()) win.show();
-          win.webContents.send(evt.CLEAR);
-        }
       },
       {
         label: 'Help',
