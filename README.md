@@ -8,7 +8,7 @@ ClipBot is a desktop app that helps you improve your daily copy/paste workflow. 
 records every copied item so that you can refer back to them whenever you need
 to.
 
-![App screenshot](https://raw.githubusercontent.com/codeshifu/clipbot/master/screenshots/photo.png?token=AE6nLZCjC2Pz8j2eBfbRh7DF681hQlU5ks5ch7GewA%3D%3D)
+![App screenshot](https://raw.githubusercontent.com/codeshifu/clipbot/master/screenshots/photo.png)
 
 ## Features
 
