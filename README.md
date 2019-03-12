@@ -5,7 +5,10 @@
 > Your personal clipboard manager
 
 ClipBot is a desktop app that helps you improve your daily copy/paste workflow. It
-records every copied item so that you can refer back to them whenever you need to.
+records every copied item so that you can refer back to them whenever you need
+to.
+
+![App screenshot](https://raw.githubusercontent.com/codeshifu/clipbot/master/screenshots/photo.png?token=AE6nLZCjC2Pz8j2eBfbRh7DF681hQlU5ks5ch7GewA%3D%3D)
 
 ## Features
 
@@ -38,7 +41,7 @@ Use the numpad (number keys) to focus a clipping for pasting.
 - (shift+cmd+c) to view your clipboard history
 - Click on the item that you want from the list or search for an item and select it
 - (cmd+v) to paste the item
-- watch this [tutorial video](https://youtu.be/xa7DuNNFjiQ) to learn more
+- watch this [video](https://youtu.be/xa7DuNNFjiQ) to learn more
 
 ## Downloads
 
