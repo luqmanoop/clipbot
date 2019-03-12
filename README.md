@@ -1,6 +1,6 @@
 # ClipBot
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
 
 > Your personal clipboard manager
 
@@ -51,7 +51,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
-<table><tr><td align="center"><a href="https://twitter.com/codeshifu"><img src="https://avatars0.githubusercontent.com/u/5154605?v=4" width="100px;" alt="Olushi Luqman O."/><br /><sub><b>Olushi Luqman O.</b></sub></a><br /><a href="https://github.com/codeshifu/clipbot/commits?author=codeshifu" title="Code">💻</a> <a href="https://github.com/codeshifu/clipbot/commits?author=codeshifu" title="Documentation">📖</a> <a href="#maintenance-codeshifu" title="Maintenance">🚧</a></td></tr></table>
+<table><tr><td align="center"><a href="https://twitter.com/codeshifu"><img src="https://avatars0.githubusercontent.com/u/5154605?v=4" width="100px;" alt="Olushi Luqman O."/><br /><sub><b>Olushi Luqman O.</b></sub></a><br /><a href="https://github.com/codeshifu/clipbot/commits?author=codeshifu" title="Code">💻</a> <a href="https://github.com/codeshifu/clipbot/commits?author=codeshifu" title="Documentation">📖</a> <a href="#maintenance-codeshifu" title="Maintenance">🚧</a></td><td align="center"><a href="https://github.com/oluwajuwon"><img src="https://avatars0.githubusercontent.com/u/29441898?v=4" width="100px;" alt="oluwajuwon"/><br /><sub><b>oluwajuwon</b></sub></a><br /><a href="https://github.com/codeshifu/clipbot/commits?author=oluwajuwon" title="Documentation">📖</a></td></tr></table>
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
