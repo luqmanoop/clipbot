@@ -21,7 +21,9 @@
     "build:electron": "babel src/app -d dist --copy-files",
     "build:package": "npx electron-packager . --overwrite --platform=darwin --arch=x64 --icon=dist/icons/mac/icon.icns --prune=true --out=release-builds",
     "build:dmg": "npx electron-installer-dmg release-builds/ClipBot-darwin-x64/ClipBot.app ClipBot --out=release-builds/mac --icon=dist/icons/mac/icon.icns",
-    "prod": "npm-run-all clean build:*"
+    "prod": "npm-run-all clean build:*",
+    "contributors:add": "npx all-contributors add",
+    "contributors:generate": "npx all-contributors generate"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,6 +39,7 @@
     "@babel/core": "7.3.4",
     "@babel/plugin-proposal-class-properties": "7.3.4",
     "@babel/preset-env": "7.3.4",
+    "all-contributors-cli": "6.1.2",
     "cross-env": "5.2.0",
     "electron": "4.0.6",
     "electron-installer-dmg": "2.0.0",
