@@ -1,5 +1,7 @@
 # ClipBot
 
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+
 > Your personal clipboard manager
 
 ClipBot is a desktop app that helps you improve your daily copy/paste workflow. It
@@ -25,12 +27,13 @@ Quickly find something you clipped in the past.
 Use the numpad (number keys) to focus a clipping for pasting.
 
 ## What can be copied?
+
 - Text
 - Images
 - **Anything that can be copied**
 
-
 ## How to use
+
 - (cmd+c) to copy an item
 - (shift+cmd+c) to view your clipboard history
 - Click on the item that you want from the list or search for an item and select it
@@ -41,6 +44,20 @@ Use the numpad (number keys) to focus a clipping for pasting.
 
 - [Mac](https://drive.google.com/open?id=16DRdc9qVpSq2-D5RBvV_3IjbXpISr0Le)
 - Linux & Windows - Coming soon
+
+## Contributors
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+<table><tr><td align="center"><a href="https://twitter.com/codeshifu"><img src="https://avatars0.githubusercontent.com/u/5154605?v=4" width="100px;" alt="Olushi Luqman O."/><br /><sub><b>Olushi Luqman O.</b></sub></a><br /><a href="https://github.com/codeshifu/clipbot/commits?author=codeshifu" title="Code">💻</a> <a href="https://github.com/codeshifu/clipbot/commits?author=codeshifu" title="Documentation">📖</a> <a href="#maintenance-codeshifu" title="Maintenance">🚧</a></td></tr></table>
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the
+[all-contributors](https://github.com/all-contributors/all-contributors)
+specification. Contributions of any kind welcome!
 
 ## License
 
