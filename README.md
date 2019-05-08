@@ -64,4 +64,4 @@ specification. Contributions of any kind welcome!
 
 ## License
 
-**clipbot** is licensed under [MIT](https://github.com/codeshifu/clipbot/blob/master/LICENSE)
+**ClipBot** is licensed under [MIT](https://github.com/codeshifu/clipbot/blob/master/LICENSE)
