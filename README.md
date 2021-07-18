@@ -46,7 +46,6 @@ Use the numpad (number keys) to focus a clipping for pasting.
 ## Downloads
 
 - [Mac](https://drive.google.com/uc?export=download&id=16DRdc9qVpSq2-D5RBvV_3IjbXpISr0Le)
-- Linux & Windows - Coming soon
 
 ## Contributors
 
