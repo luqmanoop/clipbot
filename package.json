@@ -41,7 +41,7 @@
     "@babel/preset-env": "7.3.4",
     "all-contributors-cli": "6.1.2",
     "cross-env": "5.2.0",
-    "electron": "4.0.6",
+    "electron": "13.6.6",
     "electron-installer-dmg": "2.0.0",
     "electron-packager": "13.1.1",
     "node-sass": "4.11.0",
