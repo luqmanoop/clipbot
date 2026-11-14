@@ -15,6 +15,11 @@ class MainWindow {
       webPreferences: { backgroundThrottling: false }
     });
 
+    // Open on whichever Space (desktop) is active, instead of switching
+    // back to the Space where the window was first shown. The window hides
+    // on blur, so it never lingers on other Spaces.
+    this.win.setVisibleOnAllWorkspaces(true);
+
     this.registerGlobalShortcuts();
 
     this.win.on('blur', this.win.hide);
