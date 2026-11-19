@@ -15,6 +15,16 @@ class MainWindow {
       webPreferences: { backgroundThrottling: false }
     });
 
+    // Open on whichever Space (desktop) is active, instead of switching
+    // back to the Space where the window was first shown. The window hides
+    // on blur, so it never lingers on other Spaces.
+    // Floating and not full-screenable lets it also show over a full-screen
+    // app's Space. This only works if the Dock icon is hidden after this
+    // runs (see app.js).
+    this.win.setAlwaysOnTop(true, 'floating');
+    this.win.setVisibleOnAllWorkspaces(true);
+    this.win.setFullScreenable(false);
+
     this.registerGlobalShortcuts();
 
     this.win.on('blur', this.win.hide);

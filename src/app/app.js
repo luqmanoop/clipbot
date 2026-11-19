@@ -35,10 +35,12 @@ const launchOnSystemStartup = (app, launch) => {
 const loadURL = serve({ directory: 'build' });
 
 app.on('ready', () => {
-  app.dock.hide();
   Menu.setApplicationMenu(Menu.buildFromTemplate([]));
 
   win = new MainWindow();
+  // Hide the Dock icon only after the window is set up, so the window can
+  // show over full-screen apps.
+  app.dock.hide();
   if (process.env.NODE_ENV === 'development') {
     win.loadURL('http://localhost:3000');
   } else {
